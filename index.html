@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Periodic Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Modern Periodic Table</h1>
+    <p>Enter an atomic number (1-118) to get the details of the element.</p>
+    
+    <form id="elementForm">
+        <label for="atomicNumber">Atomic Number:</label>
+        <input type="number" id="atomicNumber" min="1" max="118" required>
+        <button type="submit">Get Element</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+        class Element {
+            constructor(atomicNumber, symbol, name, group) {
+                this.atomicNumber = atomicNumber;
+                this.symbol = symbol;
+                this.name = name;
+                this.group = group;
+            }
+
+            display() {
+                return `
+                    <h3>Element Details:</h3>
+                    <p><strong>Atomic Number:</strong> ${this.atomicNumber}</p>
+                    <p><strong>Symbol:</strong> ${this.symbol}</p>
+                    <p><strong>Name:</strong> ${this.name}</p>
+                    <p><strong>Group:</strong> ${this.group}</p>
+                `;
+            }
+        }
+
+        function getElement(atomicNumber) {
+            const elements = {
+                1: new Element(1, "H", "Hydrogen", "Nonmetal"),
+                2: new Element(2, "He", "Helium", "Noble Gas"),
+                3: new Element(3, "Li", "Lithium", "Alkali Metal"),
+                4: new Element(4, "Be", "Beryllium", "Alkaline Earth Metal"),
+                5: new Element(5, "B", "Boron", "Metalloid"),
+                6: new Element(6, "C", "Carbon", "Nonmetal"),
+                7: new Element(7, "N", "Nitrogen", "Nonmetal"),
+                8: new Element(8, "O", "Oxygen", "Nonmetal"),
+                9: new Element(9, "F", "Fluorine", "Halogen"),
+                10: new Element(10, "Ne", "Neon", "Noble Gas"),
+                11: new Element(11, "Na", "Sodium", "Alkali Metal"),
+                12: new Element(12, "Mg", "Magnesium", "Alkaline Earth Metal"),
+                13: new Element(13, "Al", "Aluminium", "Post-Transition Metal"),
+                14: new Element(14, "Si", "Silicon", "Metalloid"),
+                15: new Element(15, "P", "Phosphorus", "Nonmetal"),
+                16: new Element(16, "S", "Sulfur", "Nonmetal"),
+                17: new Element(17, "Cl", "Chlorine", "Halogen"),
+                18: new Element(18, "Ar", "Argon", "Noble Gas"),
+                19: new Element(19, "K", "Potassium", "Alkali Metal"),
+                20: new Element(20, "Ca", "Calcium", "Alkaline Earth Metal"),
+                21: new Element(21, "Sc", "Scandium", "Transition Metal"),
+                22: new Element(22, "Ti", "Titanium", "Transition Metal"),
+                23: new Element(23, "V", "Vanadium", "Transition Metal"),
+                24: new Element(24, "Cr", "Chromium", "Transition Metal"),
+                25: new Element(25, "Mn", "Manganese", "Transition Metal"),
+                26: new Element(26, "Fe", "Iron", "Transition Metal"),
+                27: new Element(27, "Co", "Cobalt", "Transition Metal"),
+                28: new Element(28, "Ni", "Nickel", "Transition Metal"),
+                29: new Element(29, "Cu", "Copper", "Transition Metal"),
+                30: new Element(30, "Zn", "Zinc", "Transition Metal"),
+                31: new Element(31, "Ga", "Gallium", "Post-Transition Metal"),
+                32: new Element(32, "Ge", "Germanium", "Metalloid"),
+                33: new Element(33, "As", "Arsenic", "Metalloid"),
+                34: new Element(34, "Se", "Selenium", "Nonmetal"),
+                35: new Element(35, "Br", "Bromine", "Halogen"),
+                36: new Element(36, "Kr", "Krypton", "Noble Gas"),
+                37: new Element(37, "Rb", "Rubidium", "Alkali Metal"),
+                38: new Element(38, "Sr", "Strontium", "Alkaline Earth Metal"),
+                39: new Element(39, "Y", "Yttrium", "Transition Metal"),
+                40: new Element(40, "Zr", "Zirconium", "Transition Metal"),
+                41: new Element(41, "Nb", "Niobium", "Transition Metal"),
+                42: new Element(42, "Mo", "Molybdenum", "Transition Metal"),
+                43: new Element(43, "Tc", "Technetium", "Transition Metal"),
+                44: new Element(44, "Ru", "Ruthenium", "Transition Metal"),
+                45: new Element(45, "Rh", "Rhodium", "Transition Metal"),
+                46: new Element(46, "Pd", "Palladium", "Transition Metal"),
+                47: new Element(47, "Ag", "Silver", "Transition Metal"),
+                48: new Element(48, "Cd", "Cadmium", "Transition Metal"),
+                49: new Element(49, "In", "Indium", "Post-Transition Metal"),
+                50: new Element(50, "Sn", "Tin", "Post-Transition Metal"),
+                51: new Element(51, "Sb", "Antimony", "Metalloid"),
+                52: new Element(52, "Te", "Tellurium", "Metalloid"),
+                53: new Element(53, "I", "Iodine", "Halogen"),
+                54: new Element(54, "Xe", "Xenon", "Noble Gas"),
+                55: new Element(55, "Cs", "Cesium", "Alkali Metal"),
+                56: new Element(56, "Ba", "Barium", "Alkaline Earth Metal"),
+                57: new Element(57, "La", "Lanthanum", "Lanthanide"),
+                58: new Element(58, "Ce", "Cerium", "Lanthanide"),
+                59: new Element(59, "Pr", "Praseodymium", "Lanthanide"),
+                60: new Element(60, "Nd", "Neodymium", "Lanthanide"),
+                61: new Element(61, "Pm", "Promethium", "Lanthanide"),
+                62: new Element(62, "Sm", "Samarium", "Lanthanide"),
+                63: new Element(63, "Eu", "Europium", "Lanthanide"),
+                64: new Element(64, "Gd", "Gadolinium", "Lanthanide"),
+                65: new Element(65, "Tb", "Terbium", "Lanthanide"),
+                66: new Element(66, "Dy", "Dysprosium", "Lanthanide"),
+                67: new Element(67, "Ho", "Holmium", "Lanthanide"),
+                68: new Element(68, "Er", "Erbium", "Lanthanide"),
+                69: new Element(69, "Tm", "Thulium", "Lanthanide"),
+                70: new Element(70, "Yb", "Ytterbium", "Lanthanide"),
+                71: new Element(71, "Lu", "Lutetium", "Lanthanide"),
+                72: new Element(72, "Hf", "Hafnium", "Transition Metal"),
+                73: new Element(73, "Ta", "Tantalum", "Transition Metal"),
+                74: new Element(74, "W", "Tungsten", "Transition Metal"),
+                75: new Element(75, "Re", "Rhenium", "Transition Metal"),
+                76: new Element(76, "Os", "Osmium", "Transition Metal"),
+                77: new Element(77, "Ir", "Iridium", "Transition Metal"),
+                78: new Element(78, "Pt", "Platinum", "Transition Metal"),
+                79: new Element(79, "Au", "Gold", "Transition Metal"),
+                80: new Element(80, "Hg", "Mercury", "Transition Metal"),
+                81: new Element(81, "Tl", "Thallium", "Post-Transition Metal"),
+                82: new Element(82, "Pb", "Lead", "Post-Transition Metal"),
+                83: new Element(83, "Bi", "Bismuth", "Post-Transition Metal"),
+                84: new Element(84, "Po", "Polonium", "Metalloid"),
+                85: new Element(85, "At", "Astatine", "Metalloid"),
+                86: new Element(86, "Rn", "Radon", "Noble Gas"),
+                87: new Element(87, "Fr", "Francium", "Alkali Metal"),
+                88: new Element(88, "Ra", "Radium", "Alkaline Earth Metal"),
+                89: new Element(89, "Ac", "Actinium", "Actinide"),
+                90: new Element(90, "Th", "Thorium", "Actinide"),
+                91: new Element(91, "Pa", "Protactinium", "Actinide"),
+                92: new Element(92, "U", "Uranium", "Actinide"),
+                93: new Element(93, "Np", "Neptunium", "Actinide"),
+                94: new Element(94, "Pu", "Plutonium", "Actinide"),
+                95: new Element(95, "Am", "Americium", "Actinide"),
+                96: new Element(96, "Cm", "Curium", "Actinide"),
+                97: new Element(97, "Bk", "Berkelium", "Actinide"),
+                98: new Element(98, "Cf", "Californium", "Actinide"),
+                99: new Element(99, "Es", "Einsteinium", "Actinide"),
+                100: new Element(100, "Fm", "Fermium", "Actinide"),
+                101: new Element(101, "Md", "Mendelevium", "Actinide"),
+                102: new Element(102, "No", "Nobelium", "Actinide"),
+                103: new Element(103, "Lr", "Lawrencium", "Actinide"),
+                104: new Element(104, "Rf", "Rutherfordium", "Transition Metal"),
+                105: new Element(105, "Db", "Dubnium", "Transition Metal"),
+                106: new Element(106, "Sg", "Seaborgium", "Transition Metal"),
+                107: new Element(107, "Bh", "Bohrium", "Transition Metal"),
+                108: new Element(108, "Hs", "Hassium", "Transition Metal"),
+                109: new Element(109, "Mt", "Meitnerium", "Unknown"),
+                110: new Element(110, "Ds", "Darmstadtium", "Unknown"),
+                111: new Element(111, "Rg", "Roentgenium", "Unknown"),
+                112: new Element(112, "Cn", "Copernicium", "Unknown"),
+                113: new Element(113, "Nh", "Nihonium", "Unknown"),
+                114: new Element(114, "Fl", "Flerovium", "Unknown"),
+                115: new Element(115, "Mc", "Moscovium", "Unknown"),
+                116: new Element(116, "Lv", "Livermorium", "Unknown"),
+                117: new Element(117, "Ts", "Tennessine", "Unknown"),
+                118: new Element(118, "Og", "Oganesson", "Unknown"), 
+            };
+
+            return elements[atomicNumber] || null;
+        }
+
+        document.getElementById("elementForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            const atomicNumber = parseInt(document.getElementById("atomicNumber").value, 10);
+            const outputDiv = document.getElementById("output");
+
+            if (!isNaN(atomicNumber) && atomicNumber >= 1 && atomicNumber <= 118) {
+                const element = getElement(atomicNumber);
+                if (element) {
+                    outputDiv.innerHTML = element.display();
+                } else {
+                    outputDiv.innerHTML = `<p class="error">Element not found. Please enter a number between 1 and 118.</p>`;
+                }
+            } else {
+                outputDiv.innerHTML = `<p class="error">Invalid input. Please enter a numeric value between 1 and 118.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
